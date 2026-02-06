@@ -116,7 +116,7 @@ export default function FortunePage() {
         <div style={{
           textAlign: 'center', marginBottom: 12,
           animation: 'fadeSlide 0.5s both',
-          key: step,
+          
         }}>
           <span style={{
             fontFamily: "'ZEN SERIF TTF','Pretendard',-apple-system,sans-serif",

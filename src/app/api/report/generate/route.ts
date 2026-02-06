@@ -10,6 +10,7 @@ export async function POST(request: NextRequest) {
     var userId = body.userId;
     var profileId = body.profileId;
     var orderId = body.orderId;
+    var isDemo = body.isDemo || (orderId && orderId.startsWith("DEMO_"));
 
     if (!userId || !profileId) {
       return NextResponse.json({ success: false, error: '필수 정보가 누락되었습니다' }, { status: 400 });
@@ -24,11 +25,11 @@ export async function POST(request: NextRequest) {
       .limit(1)
       .maybeSingle();
 
-    if (!paymentCheck.data) {
+    if (!isDemo && !paymentCheck.data) {
       return NextResponse.json({ success: false, error: '결제 내역을 확인할 수 없습니다' }, { status: 403 });
     }
 
-    var paymentId = paymentCheck.data.id;
+    var paymentId = isDemo ? "DEMO" : (paymentCheck.data ? paymentCheck.data.id : null);
 
     var existingReport = await supabaseAdmin
       .from('reports')

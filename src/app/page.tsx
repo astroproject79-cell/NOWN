@@ -57,14 +57,14 @@ export default function LandingPage() {
     transition: 'all 0.5s cubic-bezier(0.23,1,0.32,1)',
   };
 
-  const glowBtnStyle = (c1: number[], c2: number[]) => ({
+  const glowBtnStyle = (c1: number[], c2: number[], isDark: boolean) => ({
     ...btnBase,
     padding: '14px 40px',
     border: 'none',
     borderRadius: 999,
-    color: 'rgba(255,255,255,0.85)',
-    background: `linear-gradient(135deg, rgba(${c1.join(',')},0.06), rgba(${c2.join(',')},0.03))`,
-    boxShadow: `0 0 0 0.5px rgba(${c1.join(',')},0.15), 0 0 40px -10px rgba(${c1.join(',')},0.12)`,
+    color: isDark ? 'rgba(255,255,255,0.85)' : 'rgba(20,30,80,0.9)',
+    background: isDark ? `linear-gradient(135deg, rgba(${c1.join(',')},0.06), rgba(${c2.join(',')},0.03))` : `linear-gradient(135deg, rgba(${c1.join(',')},0.12), rgba(${c2.join(',')},0.08))`,
+    boxShadow: isDark ? `0 0 0 0.5px rgba(${c1.join(',')},0.15), 0 0 40px -10px rgba(${c1.join(',')},0.12)` : `0 0 0 1px rgba(${c1.join(',')},0.25), 0 4px 20px rgba(${c1.join(',')},0.15)`,
     backdropFilter: 'blur(20px)',
     WebkitBackdropFilter: 'blur(20px)',
     display: 'flex' as const,
@@ -125,7 +125,7 @@ export default function LandingPage() {
             <button
               className="btn-glow"
               onClick={() => router.push('/fortune')}
-              style={glowBtnStyle(t.pColor1, t.pColor2)}
+              style={glowBtnStyle(t.pColor1, t.pColor2, theme === 'dark')}
               onMouseEnter={e => {
                 e.currentTarget.style.transform = 'translateY(-3px) scale(1.01)';
                 e.currentTarget.style.boxShadow = `0 0 0 0.5px rgba(${t.pColor1.join(',')},0.3), 0 0 60px -5px rgba(${t.pColor1.join(',')},0.2), 0 0 20px rgba(${t.pColor1.join(',')},0.08)`;
@@ -135,12 +135,12 @@ export default function LandingPage() {
                 e.currentTarget.style.boxShadow = glowBtnStyle(t.pColor1, t.pColor2).boxShadow;
               }}
             >
-              사주 풀이 보기 <Ico d={ICON_PATHS.zap} size={13} color="rgba(255,255,255,0.6)" sw={1.2} />
+              사주 풀이 보기 <Ico d={ICON_PATHS.zap} size={13} color={theme === "dark" ? "rgba(255,255,255,0.6)" : "rgba(30,50,120,0.7)"} sw={1.2} />
             </button>
             <button
               className="btn-glow"
               onClick={() => router.push('/chat')}
-              style={glowBtnStyle(t.pColor2, t.pColor3)}
+              style={glowBtnStyle(t.pColor2, t.pColor3, theme === 'dark')}
               onMouseEnter={e => {
                 e.currentTarget.style.transform = 'translateY(-3px) scale(1.01)';
                 e.currentTarget.style.boxShadow = `0 0 0 0.5px rgba(${t.pColor2.join(',')},0.3), 0 0 60px -5px rgba(${t.pColor2.join(',')},0.2), 0 0 20px rgba(${t.pColor2.join(',')},0.08)`;
@@ -150,7 +150,7 @@ export default function LandingPage() {
                 e.currentTarget.style.boxShadow = glowBtnStyle(t.pColor2, t.pColor3).boxShadow;
               }}
             >
-              AI 상담 시작 <Ico d={ICON_PATHS.chat} size={13} color="rgba(255,255,255,0.6)" sw={1.2} />
+              AI 상담 시작 <Ico d={ICON_PATHS.chat} size={13} color={theme === "dark" ? "rgba(255,255,255,0.6)" : "rgba(30,50,120,0.7)"} sw={1.2} />
             </button>
           </div>
 

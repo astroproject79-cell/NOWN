@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.36.3",
+    "@google-analytics/data": "^5.2.1",
     "@google/generative-ai": "^0.21.0",
     "@supabase/supabase-js": "^2.47.12",
     "@tosspayments/payment-sdk": "^1.9.2",

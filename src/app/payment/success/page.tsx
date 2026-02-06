@@ -1,12 +1,13 @@
 'use client';
 
+import { Suspense } from 'react';
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useStore } from '@/lib/store';
 import { themes } from '@/lib/theme';
 import AmbientCanvas from '@/components/canvas/AmbientCanvas';
 
-export default function PaymentSuccessPage() {
+function PaymentSuccessContent() {
   var router = useRouter();
   var params = useSearchParams();
   var store = useStore();
@@ -154,5 +155,27 @@ export default function PaymentSuccessPage() {
         )}
       </div>
     </div>
+  );
+}
+
+function LoadingFallback() {
+  return (
+    <div style={{ minHeight: '100vh', background: '#0a0a0f', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ textAlign: 'center' }}>
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" style={{ animation: 'orbSpin 3s linear infinite' }}>
+          <circle cx="24" cy="24" r="20" stroke="#d4a574" strokeWidth="1" opacity="0.2" />
+          <path d="M24 4a20 20 0 0 1 20 20" stroke="#d4a574" strokeWidth="1.5" strokeLinecap="round" opacity="0.7" />
+        </svg>
+        <p style={{ marginTop: 16, color: '#888', fontSize: 13 }}>로딩 중...</p>
+      </div>
+    </div>
+  );
+}
+
+export default function PaymentSuccessPage() {
+  return (
+    <Suspense fallback={<LoadingFallback />}>
+      <PaymentSuccessContent />
+    </Suspense>
   );
 }

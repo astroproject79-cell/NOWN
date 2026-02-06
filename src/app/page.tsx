@@ -132,7 +132,7 @@ export default function LandingPage() {
               }}
               onMouseLeave={e => {
                 e.currentTarget.style.transform = '';
-                e.currentTarget.style.boxShadow = glowBtnStyle(t.pColor1, t.pColor2).boxShadow;
+                e.currentTarget.style.boxShadow = glowBtnStyle(t.pColor1, t.pColor2, theme === 'dark').boxShadow;
               }}
             >
               사주 풀이 보기 <Ico d={ICON_PATHS.zap} size={13} color={theme === "dark" ? "rgba(255,255,255,0.6)" : "rgba(30,50,120,0.7)"} sw={1.2} />
@@ -147,7 +147,7 @@ export default function LandingPage() {
               }}
               onMouseLeave={e => {
                 e.currentTarget.style.transform = '';
-                e.currentTarget.style.boxShadow = glowBtnStyle(t.pColor2, t.pColor3).boxShadow;
+                e.currentTarget.style.boxShadow = glowBtnStyle(t.pColor2, t.pColor3, theme === 'dark').boxShadow;
               }}
             >
               AI 상담 시작 <Ico d={ICON_PATHS.chat} size={13} color={theme === "dark" ? "rgba(255,255,255,0.6)" : "rgba(30,50,120,0.7)"} sw={1.2} />

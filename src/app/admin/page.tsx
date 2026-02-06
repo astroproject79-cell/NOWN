@@ -401,7 +401,7 @@ export default function AdminPage() {
                 </button>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 12, marginBottom: 20 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: 12, marginBottom: 20 }}>
                 <div style={{ padding: '16px 14px', background: 'rgba(' + accentRgba + ',0.03)', borderRadius: 10, border: '1px solid rgba(' + accentRgba + ',0.06)' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 10 }}>
                     <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#22c55e', boxShadow: '0 0 8px #22c55e' }} />
@@ -450,7 +450,7 @@ export default function AdminPage() {
 
               <div style={{ borderTop: '1px solid rgba(' + accentRgba + ',0.06)', paddingTop: 16 }}>
                 <div style={{ fontSize: 11, color: t.dim, marginBottom: 10 }}>기기별 방문자</div>
-                <div style={{ display: 'flex', gap: 24 }}>
+                <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' as const }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={t.dim} strokeWidth="1.5"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18"/></svg>
                     <span style={{ fontSize: 12, color: t.text }}>모바일</span>
@@ -477,7 +477,7 @@ export default function AdminPage() {
                 </svg>
                 <span style={{ fontSize: 14, color: t.text, fontWeight: 500 }}>서비스 통계</span>
               </div>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 12 }}>
                 {[
                   { label: '총 사용자', value: stats.users, icon: 'M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2M12 3a4 4 0 100 8 4 4 0 000-8' },
                   { label: '리포트', value: stats.reports, icon: 'M9 12h6M9 16h6M17 21H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z' },
@@ -505,7 +505,7 @@ export default function AdminPage() {
           <div>
             <div style={cardStyle}>
               <h3 style={{ fontSize: 14, color: t.text, marginBottom: 16, fontWeight: 500 }}>채팅 AI 모델</h3>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 8 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 8 }}>
                 {MODELS.map(function(m) {
                   var active = chatModel === m.id;
                   return (
@@ -525,7 +525,7 @@ export default function AdminPage() {
 
             <div style={cardStyle}>
               <h3 style={{ fontSize: 14, color: t.text, marginBottom: 16, fontWeight: 500 }}>리포트 AI 모델</h3>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 8 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 8 }}>
                 {MODELS.map(function(m) {
                   var active = reportModel === m.id;
                   return (
@@ -545,7 +545,7 @@ export default function AdminPage() {
 
             <div style={cardStyle}>
               <h3 style={{ fontSize: 14, color: t.text, marginBottom: 16, fontWeight: 500 }}>가격 설정</h3>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 12 }}>
                 <div>
                   <label style={labelStyle}>프리미엄 리포트 (원)</label>
                   <input type="number" value={premiumPrice} onChange={function(e) { setPremiumPrice(e.target.value); }} style={inputStyle} />

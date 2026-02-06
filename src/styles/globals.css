@@ -177,3 +177,10 @@ body {
     padding-top: env(safe-area-inset-top);
   }
 }
+
+/* PWA standalone mode detection */
+@media all and (display-mode: standalone) {
+  body {
+    padding-top: env(safe-area-inset-top, 44px);
+  }
+}

@@ -8,8 +8,13 @@ export default function Header() {
   var pathname = usePathname();
   var isLanding = pathname === '/';
   var [scrolled, setScrolled] = useState(false);
+  var [isPWA, setIsPWA] = useState(false);
 
   useEffect(function() {
+    var isStandalone = window.matchMedia('(display-mode: standalone)').matches 
+      || (window.navigator as any).standalone === true;
+    setIsPWA(isStandalone);
+
     function handleScroll() {
       setScrolled(window.scrollY > 50);
     }
@@ -17,7 +22,7 @@ export default function Header() {
     return function() { window.removeEventListener('scroll', handleScroll); };
   }, []);
 
-  var showBg = !isLanding || scrolled;
+  if (isLanding && !scrolled) return null;
 
   return (
     <header style={{
@@ -25,18 +30,20 @@ export default function Header() {
       top: 0,
       left: 0,
       right: 0,
-      height: '60px',
-      paddingTop: 'env(safe-area-inset-top, 0px)',
+      paddingTop: isPWA ? 'max(env(safe-area-inset-top, 0px), 44px)' : '0px',
+      height: isPWA ? 'calc(60px + max(env(safe-area-inset-top, 0px), 44px))' : '60px',
       display: 'flex',
-      alignItems: 'center',
+      alignItems: 'flex-end',
       justifyContent: 'space-between',
-      padding: '0 24px',
-      background: showBg ? 'rgba(10, 10, 15, 0.85)' : 'transparent',
-      backdropFilter: showBg ? 'blur(20px)' : 'none',
-      WebkitBackdropFilter: showBg ? 'blur(20px)' : 'none',
-      borderBottom: showBg ? '1px solid rgba(255, 255, 255, 0.05)' : 'none',
+      paddingLeft: '24px',
+      paddingRight: '24px',
+      paddingBottom: '16px',
+      background: 'rgba(10, 10, 15, 0.9)',
+      backdropFilter: 'blur(20px)',
+      WebkitBackdropFilter: 'blur(20px)',
+      borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
       zIndex: 100,
-      transition: 'background 0.3s, backdrop-filter 0.3s',
+      transition: 'all 0.3s',
     }}>
       <Link href="/" style={{ 
         fontSize: '18px', 

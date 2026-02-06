@@ -158,6 +158,22 @@ export default function PaymentPage() {
           {loading ? '결제 모듈 로딩 중...' : '결제하기'}
         </button>
 
+        <button
+          onClick={() => {
+            const params = new URLSearchParams(window.location.search);
+            const userId = params.get('userId');
+            const profileId = params.get('profileId');
+            window.location.href = `/payment/success?orderId=DEMO_${Date.now()}&amount=${price}&userId=${userId}&profileId=${profileId}`;
+          }}
+          style={{
+            width: '100%', padding: '14px', marginTop: 12, border: '1px dashed rgba(' + accentRgba + ',0.3)',
+            borderRadius: 12, background: 'transparent', color: t.dim, fontSize: 13,
+            cursor: 'pointer', fontFamily: "'Pretendard',sans-serif", transition: 'all 0.3s',
+          }}
+        >
+          🧪 데모 결제 (개발용)
+        </button>
+
         <p style={{ fontSize: 11, color: t.dim, marginTop: 16, opacity: 0.5 }}>
           결제 완료 즉시 리포트가 생성됩니다
         </p>

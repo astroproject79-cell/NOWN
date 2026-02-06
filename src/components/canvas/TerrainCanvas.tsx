@@ -155,5 +155,5 @@ export default function TerrainCanvas({ theme }: Props) {
     };
   }, [theme]);
 
-  return <canvas ref={ref} style={{ position: 'fixed', inset: 0, zIndex: 0 }} />;
+  return <canvas ref={ref} style={{ position: 'fixed', top: 60, left: 0, right: 0, bottom: 0, zIndex: 0 }} />;
 }

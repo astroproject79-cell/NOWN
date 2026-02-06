@@ -8,13 +8,8 @@ export default function Header() {
   var pathname = usePathname();
   var isLanding = pathname === '/';
   var [scrolled, setScrolled] = useState(false);
-  var [isPWA, setIsPWA] = useState(false);
 
   useEffect(function() {
-    var isStandalone = window.matchMedia('(display-mode: standalone)').matches 
-      || (window.navigator as any).standalone === true;
-    setIsPWA(isStandalone);
-
     function handleScroll() {
       setScrolled(window.scrollY > 100);
     }
@@ -23,16 +18,14 @@ export default function Header() {
   }, []);
 
   var showBg = !isLanding || scrolled;
-  var topPadding = isPWA ? 44 : 0;
 
   return (
-    <header style={{
+    <header className="pwa-header" style={{
       position: 'fixed',
       top: 0,
       left: 0,
       right: 0,
-      paddingTop: topPadding,
-      height: 60 + topPadding,
+      height: 60,
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',

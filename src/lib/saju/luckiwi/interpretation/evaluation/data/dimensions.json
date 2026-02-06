@@ -1,0 +1,373 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2026-01-04",
+  "description": "스토리 품질 평가 차원 및 기준 정의",
+  "dimensions": [
+    {
+      "id": "structure",
+      "name": "구조적 완성도",
+      "description": "문서가 필수 요소를 포함하고 논리적 흐름을 갖추었는지 평가",
+      "weight": 15,
+      "criteria": [
+        {
+          "id": "structure_intro",
+          "name": "도입부 존재",
+          "description": "문서 성격을 설명하는 도입부가 있는가",
+          "checkType": "presence",
+          "target": true,
+          "maxScore": 5
+        },
+        {
+          "id": "structure_basic",
+          "name": "기본 구조 섹션",
+          "description": "기본 인생 구조 섹션이 있는가",
+          "checkType": "presence",
+          "target": true,
+          "maxScore": 5
+        },
+        {
+          "id": "structure_advice",
+          "name": "개운 방향 섹션",
+          "description": "삶을 편하게 만드는 방법 섹션이 있는가",
+          "checkType": "presence",
+          "target": true,
+          "maxScore": 5
+        },
+        {
+          "id": "structure_relationship",
+          "name": "관계 섹션",
+          "description": "연애/관계 섹션이 있는가",
+          "checkType": "presence",
+          "target": true,
+          "maxScore": 3
+        },
+        {
+          "id": "structure_career",
+          "name": "직업 섹션",
+          "description": "직업/형태 섹션이 있는가",
+          "checkType": "presence",
+          "target": true,
+          "maxScore": 3
+        },
+        {
+          "id": "structure_key_sentence",
+          "name": "핵심 문장",
+          "description": "기억해야 할 한 문장이 있는가",
+          "checkType": "presence",
+          "target": true,
+          "maxScore": 5
+        },
+        {
+          "id": "structure_conclusion",
+          "name": "마무리",
+          "description": "적절한 마무리가 있는가",
+          "checkType": "presence",
+          "target": true,
+          "maxScore": 4
+        }
+      ]
+    },
+    {
+      "id": "metaphor",
+      "name": "메타포 일관성",
+      "description": "중심 메타포가 문서 전체에서 일관되게 유지되는지 평가",
+      "weight": 15,
+      "criteria": [
+        {
+          "id": "metaphor_central",
+          "name": "중심 메타포 명확성",
+          "description": "중심 메타포가 명확하게 제시되었는가",
+          "checkType": "presence",
+          "target": true,
+          "maxScore": 10
+        },
+        {
+          "id": "metaphor_consistency",
+          "name": "메타포 일관성",
+          "description": "문서 전체에서 메타포가 일관되게 사용되는가",
+          "checkType": "ratio",
+          "target": 0.8,
+          "min": 0.5,
+          "maxScore": 10
+        },
+        {
+          "id": "metaphor_extension",
+          "name": "메타포 확장",
+          "description": "메타포가 다양한 맥락으로 확장되는가",
+          "checkType": "count",
+          "target": 3,
+          "min": 1,
+          "maxScore": 5
+        },
+        {
+          "id": "metaphor_natural",
+          "name": "자연 비유 사용",
+          "description": "계절, 자연 요소 등 자연 비유가 사용되는가",
+          "checkType": "count",
+          "target": 5,
+          "min": 2,
+          "maxScore": 5
+        }
+      ]
+    },
+    {
+      "id": "empathy",
+      "name": "공감 지수",
+      "description": "독자의 고생을 인정하고 공감하는 표현이 있는지 평가",
+      "weight": 20,
+      "criteria": [
+        {
+          "id": "empathy_validation",
+          "name": "고생 인정",
+          "description": "독자의 어려움과 노력을 인정하는 표현이 있는가",
+          "checkType": "count",
+          "target": 3,
+          "min": 1,
+          "maxScore": 10
+        },
+        {
+          "id": "empathy_understanding",
+          "name": "상황 이해",
+          "description": "'~했을 것입니다', '~어려웠을 것입니다' 등 이해 표현",
+          "checkType": "count",
+          "target": 5,
+          "min": 2,
+          "maxScore": 8
+        },
+        {
+          "id": "empathy_not_fault",
+          "name": "탓하지 않음",
+          "description": "독자 탓이 아님을 전달하는 표현이 있는가",
+          "checkType": "presence",
+          "target": true,
+          "maxScore": 7
+        },
+        {
+          "id": "empathy_second_person",
+          "name": "2인칭 사용",
+          "description": "'당신'이라는 호칭을 적절히 사용하는가",
+          "checkType": "count",
+          "target": 10,
+          "min": 5,
+          "maxScore": 5
+        }
+      ]
+    },
+    {
+      "id": "hope",
+      "name": "희망 지수",
+      "description": "긍정적 전망과 희망의 메시지가 있는지 평가",
+      "weight": 15,
+      "criteria": [
+        {
+          "id": "hope_future",
+          "name": "미래 전망",
+          "description": "긍정적인 미래 전망이 제시되는가",
+          "checkType": "presence",
+          "target": true,
+          "maxScore": 10
+        },
+        {
+          "id": "hope_possibility",
+          "name": "가능성 언급",
+          "description": "'~할 수 있습니다', '~될 것입니다' 등 가능성 표현",
+          "checkType": "count",
+          "target": 3,
+          "min": 1,
+          "maxScore": 8
+        },
+        {
+          "id": "hope_change",
+          "name": "변화 가능성",
+          "description": "운이나 시기에 따른 긍정적 변화를 언급하는가",
+          "checkType": "presence",
+          "target": true,
+          "maxScore": 7
+        },
+        {
+          "id": "hope_closing",
+          "name": "희망적 마무리",
+          "description": "섹션들이 희망적으로 마무리되는가",
+          "checkType": "ratio",
+          "target": 0.7,
+          "min": 0.5,
+          "maxScore": 5
+        }
+      ]
+    },
+    {
+      "id": "practicality",
+      "name": "실용성",
+      "description": "실천 가능한 조언과 구체적 가이드가 있는지 평가",
+      "weight": 10,
+      "criteria": [
+        {
+          "id": "practical_advice",
+          "name": "실천 조언",
+          "description": "구체적으로 실천 가능한 조언이 있는가",
+          "checkType": "count",
+          "target": 3,
+          "min": 1,
+          "maxScore": 10
+        },
+        {
+          "id": "practical_career",
+          "name": "직업 가이드",
+          "description": "적합한 직업/업종이 구체적으로 제시되는가",
+          "checkType": "count",
+          "target": 3,
+          "min": 1,
+          "maxScore": 7
+        },
+        {
+          "id": "practical_avoid",
+          "name": "주의사항",
+          "description": "피해야 할 것, 주의할 점이 명시되는가",
+          "checkType": "presence",
+          "target": true,
+          "maxScore": 6
+        },
+        {
+          "id": "practical_action",
+          "name": "액션 플랜",
+          "description": "당장 실천할 수 있는 행동이 제시되는가",
+          "checkType": "presence",
+          "target": true,
+          "maxScore": 7
+        }
+      ]
+    },
+    {
+      "id": "tone",
+      "name": "톤 적절성",
+      "description": "단정을 피하고 가능성으로 서술하는지 평가",
+      "weight": 10,
+      "criteria": [
+        {
+          "id": "tone_non_definitive",
+          "name": "단정 회피",
+          "description": "'~입니다' 대신 '~일 수 있습니다' 등 완곡한 표현 사용",
+          "checkType": "ratio",
+          "target": 0.7,
+          "min": 0.5,
+          "maxScore": 10
+        },
+        {
+          "id": "tone_possibility",
+          "name": "가능성 서술",
+          "description": "예언이 아닌 가능성으로 서술하는가",
+          "checkType": "pattern",
+          "target": "possibility_pattern",
+          "maxScore": 8
+        },
+        {
+          "id": "tone_respectful",
+          "name": "존중적 어조",
+          "description": "독자를 존중하는 어조가 유지되는가",
+          "checkType": "sentiment",
+          "target": "positive",
+          "maxScore": 7
+        },
+        {
+          "id": "tone_disclaimer",
+          "name": "면책 문구",
+          "description": "단정이 아님을 명시하는 문구가 있는가",
+          "checkType": "presence",
+          "target": true,
+          "maxScore": 5
+        }
+      ]
+    },
+    {
+      "id": "readability",
+      "name": "가독성",
+      "description": "일반인이 쉽게 읽고 이해할 수 있는지 평가",
+      "weight": 10,
+      "criteria": [
+        {
+          "id": "readability_jargon",
+          "name": "전문용어 절제",
+          "description": "사주 전문용어가 최소화되었는가",
+          "checkType": "count",
+          "target": 5,
+          "max": 10,
+          "maxScore": 8
+        },
+        {
+          "id": "readability_explain",
+          "name": "용어 설명",
+          "description": "사용된 전문용어에 괄호 설명이 있는가",
+          "checkType": "ratio",
+          "target": 0.8,
+          "min": 0.5,
+          "maxScore": 7
+        },
+        {
+          "id": "readability_sentence",
+          "name": "문장 길이",
+          "description": "문장이 적절한 길이인가 (평균 30-50자)",
+          "checkType": "ratio",
+          "target": 0.7,
+          "min": 0.5,
+          "maxScore": 5
+        },
+        {
+          "id": "readability_paragraph",
+          "name": "문단 구분",
+          "description": "문단이 적절히 나뉘어 있는가",
+          "checkType": "presence",
+          "target": true,
+          "maxScore": 5
+        },
+        {
+          "id": "readability_divider",
+          "name": "구분선 사용",
+          "description": "섹션 간 구분이 명확한가",
+          "checkType": "presence",
+          "target": true,
+          "maxScore": 5
+        }
+      ]
+    },
+    {
+      "id": "emotionalJourney",
+      "name": "감정 여정",
+      "description": "공감→이해→희망의 감정적 흐름이 있는지 평가",
+      "weight": 5,
+      "criteria": [
+        {
+          "id": "journey_empathy_first",
+          "name": "공감으로 시작",
+          "description": "도입부에서 공감/인정으로 시작하는가",
+          "checkType": "presence",
+          "target": true,
+          "maxScore": 8
+        },
+        {
+          "id": "journey_understanding",
+          "name": "이해 제공",
+          "description": "중반부에서 삶의 구조를 이해시키는가",
+          "checkType": "presence",
+          "target": true,
+          "maxScore": 7
+        },
+        {
+          "id": "journey_hope_end",
+          "name": "희망으로 마무리",
+          "description": "마무리가 희망적인가",
+          "checkType": "presence",
+          "target": true,
+          "maxScore": 8
+        },
+        {
+          "id": "journey_flow",
+          "name": "전체 흐름",
+          "description": "공감→이해→희망의 자연스러운 흐름이 있는가",
+          "checkType": "pattern",
+          "target": "emotional_flow",
+          "maxScore": 7
+        }
+      ]
+    }
+  ]
+}

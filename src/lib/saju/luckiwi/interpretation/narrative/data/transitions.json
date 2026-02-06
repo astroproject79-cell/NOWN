@@ -1,0 +1,206 @@
+{
+  "$schema": "../transitions.schema.json",
+  "version": "1.0.0",
+  "lastUpdated": "2026-01-03",
+  "description": "섹션 간 전환구 라이브러리",
+  "phrases": [
+    {
+      "id": "intro_to_basicStructure",
+      "from": "intro",
+      "to": "basicStructure",
+      "variants": [
+        {
+          "conditions": {},
+          "phrase": "",
+          "priority": 0
+        }
+      ]
+    },
+    {
+      "id": "basicStructure_to_lifeAdvice_weak",
+      "from": "basicStructure",
+      "to": "lifeAdvice",
+      "variants": [
+        {
+          "conditions": {
+            "strength": ["weak"]
+          },
+          "phrase": "이런 구조에서 삶을 편하게 만드는 방법은 더 열심히 사는 것이 아닙니다. 이미 충분히 열심히 살고 있기 때문입니다.",
+          "priority": 20
+        },
+        {
+          "conditions": {
+            "strength": ["strong"]
+          },
+          "phrase": "강한 에너지를 가진 당신에게 필요한 것은 속도가 아니라 방향입니다.",
+          "priority": 20
+        },
+        {
+          "conditions": {
+            "strength": ["neutral"]
+          },
+          "phrase": "균형 잡힌 에너지를 가진 당신에게 필요한 것은 그 균형을 유지하는 것입니다.",
+          "priority": 20
+        },
+        {
+          "conditions": {},
+          "phrase": "삶을 편하게 만드는 방법을 알아보겠습니다.",
+          "priority": 0
+        }
+      ]
+    },
+    {
+      "id": "lifeAdvice_to_relationship",
+      "from": "lifeAdvice",
+      "to": "relationship",
+      "variants": [
+        {
+          "conditions": {},
+          "phrase": "",
+          "priority": 0
+        }
+      ]
+    },
+    {
+      "id": "relationship_to_career",
+      "from": "relationship",
+      "to": "career",
+      "variants": [
+        {
+          "conditions": {},
+          "phrase": "",
+          "priority": 0
+        }
+      ]
+    },
+    {
+      "id": "career_to_wealth",
+      "from": "career",
+      "to": "wealth",
+      "variants": [
+        {
+          "conditions": {
+            "structure": ["식신격", "상관격"]
+          },
+          "phrase": "당신은 재능을 통해 가치를 창출하는 구조입니다.",
+          "priority": 20
+        },
+        {
+          "conditions": {
+            "structure": ["정재격", "편재격"]
+          },
+          "phrase": "당신은 재물을 다루는 감각이 타고난 구조입니다.",
+          "priority": 20
+        },
+        {
+          "conditions": {
+            "structure": ["정관격", "편관격"]
+          },
+          "phrase": "당신은 조직 내에서 성장하며 재물을 얻는 구조입니다.",
+          "priority": 20
+        },
+        {
+          "conditions": {},
+          "phrase": "",
+          "priority": 0
+        }
+      ]
+    },
+    {
+      "id": "wealth_to_keySentence",
+      "from": "wealth",
+      "to": "keySentence",
+      "variants": [
+        {
+          "conditions": {},
+          "phrase": "",
+          "priority": 0
+        }
+      ]
+    },
+    {
+      "id": "keySentence_to_yearlyFortune",
+      "from": "keySentence",
+      "to": "yearlyFortune",
+      "variants": [
+        {
+          "conditions": {},
+          "phrase": "",
+          "priority": 0
+        }
+      ]
+    },
+    {
+      "id": "yearlyFortune_to_twelveStages",
+      "from": "yearlyFortune",
+      "to": "twelveStages",
+      "variants": [
+        {
+          "conditions": {},
+          "phrase": "더 깊이 들여다보면 다음과 같습니다.",
+          "priority": 0
+        }
+      ]
+    },
+    {
+      "id": "basicStructure_internal_validation",
+      "from": "basicStructure",
+      "to": "basicStructure",
+      "variants": [
+        {
+          "conditions": {
+            "strength": ["weak"]
+          },
+          "phrase": "겉으로 보기에는 차분하고 강해 보이지만, 실제로는 안에 많은 책임과 역할을 안고 살아가는 구조입니다.",
+          "priority": 20
+        },
+        {
+          "conditions": {
+            "strength": ["strong"]
+          },
+          "phrase": "에너지가 넘치고 추진력이 강하지만, 때로는 그 힘을 어디에 쓸지 방향을 잡지 못할 수 있습니다.",
+          "priority": 20
+        },
+        {
+          "conditions": {
+            "hasPattern": ["금한수냉"]
+          },
+          "phrase": "이는 부모나 환경의 덕보다는 본인의 '정신력'과 '오기'로 버텨온 세월임을 증명합니다.",
+          "priority": 30
+        },
+        {
+          "conditions": {},
+          "phrase": "",
+          "priority": 0
+        }
+      ]
+    },
+    {
+      "id": "relationship_internal_hope",
+      "from": "relationship",
+      "to": "relationship",
+      "variants": [
+        {
+          "conditions": {
+            "elementBalance": [{"element": "목", "condition": "none"}]
+          },
+          "phrase": "사주 원국에 드러난 나무가 보이지 않지만, 역설적으로 '운에서 들어올 때' 가장 확실하게 내 것이 된다는 뜻입니다.",
+          "priority": 25
+        },
+        {
+          "conditions": {
+            "season": ["winter"],
+            "dayMasterElement": ["금"]
+          },
+          "phrase": "앞으로 강렬한 화기가 들어와 당신을 따뜻하게 데우면, 자연스럽게 꽃은 피어날 것입니다.",
+          "priority": 20
+        },
+        {
+          "conditions": {},
+          "phrase": "",
+          "priority": 0
+        }
+      ]
+    }
+  ]
+}

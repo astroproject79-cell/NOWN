@@ -131,7 +131,7 @@ async function searchRelevantDomain(
   queries.push(...sajuTerms);
 
   // 중복 제거
-  const uniqueQueries = [...new Set(queries)];
+  const uniqueQueries = Array.from(new Set(queries));
 
   // 병렬 검색
   const results = await Promise.all(

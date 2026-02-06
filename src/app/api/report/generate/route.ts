@@ -153,6 +153,10 @@ export async function POST(request: NextRequest) {
       total_chars: totalChars,
     }).select('id').single();
 
+    if (reportInsert.error) {
+      console.error("Report insert error:", reportInsert.error);
+      return NextResponse.json({ success: false, error: "리포트 저장 실패: " + reportInsert.error.message }, { status: 500 });
+    }
     var reportId = reportInsert.data?.id;
 
     if (reportId && paymentId) {

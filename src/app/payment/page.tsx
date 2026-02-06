@@ -161,8 +161,8 @@ export default function PaymentPage() {
         <button
           onClick={() => {
             const params = new URLSearchParams(window.location.search);
-            const userId = params.get('userId');
-            const profileId = params.get('profileId');
+            const userId = params.get('userId') || 'DEMO_USER_' + Date.now();
+            const profileId = params.get('profileId') || 'DEMO_PROFILE_' + Date.now();
             window.location.href = `/payment/success?orderId=DEMO_${Date.now()}&amount=${price}&userId=${userId}&profileId=${profileId}`;
           }}
           style={{

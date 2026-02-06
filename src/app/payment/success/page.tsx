@@ -21,37 +21,42 @@ function PaymentSuccessContent() {
     var paymentKey = params.get('paymentKey') || '';
     var orderId = params.get('orderId') || '';
     var amountParam = params.get('amount');
-    var userId = localStorage.getItem('saju_uid') || '';
-    var profileId = localStorage.getItem('saju_profile_id') || '';
+    var isDemo = orderId.startsWith('DEMO_');
 
-    if (!paymentKey || !orderId || !amountParam) {
+    var userId = params.get('userId') || localStorage.getItem('saju_uid') || '';
+    var profileId = params.get('profileId') || localStorage.getItem('saju_profile_id') || '';
+
+    if (!isDemo && (!paymentKey || !orderId || !amountParam)) {
       setStatus('error');
       setErrorMsg('결제 정보가 없습니다');
       return;
     }
 
-    if (!userId || !profileId) {
+    if (!isDemo && !userId) {
       setStatus('error');
       setErrorMsg('사용자 정보를 찾을 수 없습니다. 다시 시도해주세요.');
       return;
     }
 
-    var amount = Number(amountParam);
+    var amount = Number(amountParam) || 19900;
 
     async function process() {
       try {
         setProgress(10);
-        var confirmRes = await fetch('/api/payment/confirm', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ paymentKey: paymentKey, orderId: orderId, amount: amount, userId: userId }),
-        });
-        var confirmData = await confirmRes.json();
 
-        if (!confirmData.success) {
-          setStatus('error');
-          setErrorMsg(confirmData.error || '결제 확인 실패');
-          return;
+        if (!isDemo) {
+          var confirmRes = await fetch('/api/payment/confirm', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ paymentKey: paymentKey, orderId: orderId, amount: amount, userId: userId }),
+          });
+          var confirmData = await confirmRes.json();
+
+          if (!confirmData.success) {
+            setStatus('error');
+            setErrorMsg(confirmData.error || '결제 확인 실패');
+            return;
+          }
         }
 
         setStatus('generating');
@@ -64,7 +69,7 @@ function PaymentSuccessContent() {
         var reportRes = await fetch('/api/report/generate', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ userId: userId, profileId: profileId, orderId: orderId }),
+          body: JSON.stringify({ userId: userId, profileId: profileId, orderId: orderId, isDemo: isDemo }),
         });
         var reportData = await reportRes.json();
 
@@ -146,7 +151,7 @@ function PaymentSuccessContent() {
         )}
 
         {status === 'error' && (
-          <button onClick={function() { router.push('/fortune/result'); }} style={{
+          <button onClick={function() { router.push('/'); }} style={{
             marginTop: 24, padding: '12px 24px', border: '1px solid rgba(' + t.pColor1.join(',') + ',0.15)',
             background: 'transparent', color: t.dim, fontSize: 13, borderRadius: 8, cursor: 'pointer',
           }}>

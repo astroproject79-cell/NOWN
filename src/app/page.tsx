@@ -81,7 +81,7 @@ export default function LandingPage() {
         <section style={{
           minHeight: '100vh', display: 'flex', flexDirection: 'column',
           alignItems: 'center', justifyContent: 'center',
-          padding: '100px 24px 60px', textAlign: 'center', position: 'relative',
+          padding: '160px 24px 60px', textAlign: 'center', position: 'relative',
         }}>
           <OrbitRingSvg size={420} color={t.accent} style={{
             position: 'absolute', top: '50%', left: '50%',

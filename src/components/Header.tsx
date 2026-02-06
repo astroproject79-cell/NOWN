@@ -16,13 +16,14 @@ export default function Header() {
     setIsPWA(isStandalone);
 
     function handleScroll() {
-      setScrolled(window.scrollY > 50);
+      setScrolled(window.scrollY > 100);
     }
     window.addEventListener('scroll', handleScroll);
     return function() { window.removeEventListener('scroll', handleScroll); };
   }, []);
 
-  if (isLanding && !scrolled) return null;
+  var showBg = !isLanding || scrolled;
+  var topPadding = isPWA ? 44 : 0;
 
   return (
     <header style={{
@@ -30,23 +31,22 @@ export default function Header() {
       top: 0,
       left: 0,
       right: 0,
-      paddingTop: isPWA ? 'max(env(safe-area-inset-top, 0px), 44px)' : '0px',
-      height: isPWA ? 'calc(60px + max(env(safe-area-inset-top, 0px), 44px))' : '60px',
+      paddingTop: topPadding,
+      height: 60 + topPadding,
       display: 'flex',
-      alignItems: 'flex-end',
+      alignItems: 'center',
       justifyContent: 'space-between',
-      paddingLeft: '24px',
-      paddingRight: '24px',
-      paddingBottom: '16px',
-      background: 'rgba(10, 10, 15, 0.9)',
-      backdropFilter: 'blur(20px)',
-      WebkitBackdropFilter: 'blur(20px)',
-      borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
+      paddingLeft: 24,
+      paddingRight: 24,
+      background: showBg ? 'rgba(10, 10, 15, 0.9)' : 'transparent',
+      backdropFilter: showBg ? 'blur(20px)' : 'none',
+      WebkitBackdropFilter: showBg ? 'blur(20px)' : 'none',
+      borderBottom: showBg ? '1px solid rgba(255, 255, 255, 0.05)' : 'none',
       zIndex: 100,
-      transition: 'all 0.3s',
+      transition: 'background 0.3s, backdrop-filter 0.3s',
     }}>
       <Link href="/" style={{ 
-        fontSize: '18px', 
+        fontSize: 18, 
         fontWeight: 600, 
         color: '#d4a574',
         textDecoration: 'none',

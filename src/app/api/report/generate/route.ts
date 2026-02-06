@@ -12,6 +12,37 @@ export async function POST(request: NextRequest) {
     var orderId = body.orderId;
     var isDemo = body.isDemo || (orderId && orderId.startsWith("DEMO_"));
 
+    if (isDemo && (!userId || userId.startsWith('DEMO_'))) {
+      var demoUser = await supabaseAdmin.from('users').insert({
+        name: '데모사용자',
+        birth_date: '1998-05-11',
+        birth_time: '09-11',
+        gender: 'female',
+        is_lunar: false,
+        focus_area: 'all',
+      }).select('id').single();
+      
+      if (demoUser.data) {
+        userId = demoUser.data.id;
+        
+        var demoProfile = await supabaseAdmin.from('saju_profiles').insert({
+          user_id: userId,
+          year_pillar: '무인',
+          month_pillar: '정사',
+          day_pillar: '무오',
+          hour_pillar: '정사',
+          day_master: '무',
+          day_master_element: '토',
+          five_elements: { '목': 1, '화': 5, '토': 2, '금': 0, '수': 0 },
+          raw_data: {},
+        }).select('id').single();
+        
+        if (demoProfile.data) {
+          profileId = demoProfile.data.id;
+        }
+      }
+    }
+
     if (!userId || !profileId) {
       return NextResponse.json({ success: false, error: '필수 정보가 누락되었습니다' }, { status: 400 });
     }

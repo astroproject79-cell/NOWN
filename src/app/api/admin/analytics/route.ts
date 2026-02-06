@@ -20,8 +20,7 @@ function getAnalyticsClient() {
 }
 
 export async function GET(req: NextRequest) {
-  const authHeader = req.headers.get('authorization');
-  const token = authHeader?.replace('Bearer ', '');
+  const token = req.headers.get('x-admin-token');
   
   if (token !== process.env.ADMIN_PASSWORD) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });

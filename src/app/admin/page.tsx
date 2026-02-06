@@ -112,7 +112,7 @@ export default function AdminPage() {
       .then(function(res) {
         if (res.success) setStats(res.data);
       });
-    fetch("/api/admin/analytics", { headers: { "Authorization": "Bearer " + getToken() } })
+    fetch("/api/admin/analytics", { headers: { "x-admin-token": getToken() } })
       .then(function(r) { return r.json(); })
       .then(function(res) {
         if (res.success) {

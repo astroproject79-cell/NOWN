@@ -107,11 +107,31 @@ export default function AdminPage() {
   }
 
   function loadStats() {
-    fetch('/api/admin/stats', { headers: { 'x-admin-token': getToken() } })
+    fetch("/api/admin/stats", { headers: { "x-admin-token": getToken() } })
       .then(function(r) { return r.json(); })
       .then(function(res) {
         if (res.success) setStats(res.data);
       });
+    fetch("/api/admin/analytics", { headers: { "Authorization": "Bearer " + getToken() } })
+      .then(function(r) { return r.json(); })
+      .then(function(res) {
+        if (res.success) {
+          var d = res.data;
+          var mins = Math.floor(d.avgDuration / 60);
+          var secs = d.avgDuration % 60;
+          setGaStats({
+            realtime: d.realtime,
+            visitors: d.visitors,
+            pageviews: d.pageviews,
+            bounceRate: d.bounceRate,
+            avgDuration: mins + "분 " + secs + "초",
+            mobile: d.mobile,
+            desktop: d.desktop,
+            tablet: d.tablet,
+          });
+        }
+      })
+      .catch(function(e) { console.log("GA fetch error:", e); });
   }
 
   function loadPrompts() {

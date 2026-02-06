@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { BetaAnalyticsDataClient } from '@google-analytics/data';
+import { checkAdminAuth } from '@/lib/admin';
 
 const propertyId = process.env.GA_PROPERTY_ID;
 
@@ -20,9 +21,7 @@ function getAnalyticsClient() {
 }
 
 export async function GET(req: NextRequest) {
-  const token = req.headers.get('x-admin-token');
-  
-  if (token !== process.env.ADMIN_PASSWORD) {
+  if (!checkAdminAuth(req)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 

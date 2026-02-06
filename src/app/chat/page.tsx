@@ -34,6 +34,18 @@ export default function ChatPage() {
   var [input, setInput] = useState('');
   var [isStreaming, setIsStreaming] = useState(false);
   var [ready, setReady] = useState(false);
+
+  useEffect(function() {
+    if (messages.length > 0 && !isStreaming) {
+      var lastMsg = messages[messages.length - 1];
+      if (lastMsg.role === "assistant" && hasCTA(lastMsg.content)) {
+        var timer = setTimeout(function() {
+          router.push("/payment");
+        }, 2500);
+        return function() { clearTimeout(timer); };
+      }
+    }
+  }, [messages, isStreaming, router]);
   var bottomRef = useRef<HTMLDivElement>(null);
   var inputRef = useRef<HTMLInputElement>(null);
   var streamContent = useRef('');
@@ -196,8 +208,8 @@ export default function ChatPage() {
                     </p>
                   </div>
                   {showCTA && (
-                    <button
-                      onClick={function() { router.push('/payment'); }}
+                    <div
+                      
                       style={{
                         marginTop: 10, width: '100%', padding: '14px 20px',
                         background: 'linear-gradient(135deg, rgba(' + accentRgba + ',0.2), rgba(' + accent2Rgba + ',0.15))',
@@ -210,8 +222,8 @@ export default function ChatPage() {
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.5">
                         <path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z" />
                       </svg>
-                      <span style={{ color: '#fff', fontSize: 14, fontWeight: 500, fontFamily: "'Pretendard',sans-serif" }}>프리미엄 리포트 받기</span>
-                    </button>
+                      <span style={{ color: '#fff', fontSize: 14, fontWeight: 500, fontFamily: "'Pretendard',sans-serif" }}>잠시 후 리포트 페이지로 이동합니다...</span>
+                    </div>
                   )}
                 </div>
               </div>
@@ -239,7 +251,7 @@ export default function ChatPage() {
                 outline: 'none', transition: 'border 0.3s',
               }}
             />
-            <button
+            <div
               onClick={send}
               disabled={!input.trim() || isStreaming}
               style={{
@@ -257,7 +269,7 @@ export default function ChatPage() {
                 <line x1="22" y1="2" x2="11" y2="13" />
                 <polygon points="22 2 15 22 11 13 2 9 22 2" />
               </svg>
-            </button>
+            </div>
           </div>
         </div>
       </div>

@@ -46,6 +46,7 @@ export default function AdminPage() {
   var [toast, setToast] = useState('');
 
   var [stats, setStats] = useState({ users: 0, reports: 0, payments: 0, revenue: 0 });
+  var [gaLoading, setGaLoading] = useState(false);
   var [gaStats, setGaStats] = useState({ realtime: 0, visitors: 0, pageviews: 0, bounceRate: 0, avgDuration: '0분 0초', mobile: 0, desktop: 0, tablet: 0 });
 
   var [chatPrompt, setChatPrompt] = useState('');
@@ -112,6 +113,7 @@ export default function AdminPage() {
       .then(function(res) {
         if (res.success) setStats(res.data);
       });
+    setGaLoading(true);
     fetch("/api/admin/analytics", { headers: { "x-admin-token": getToken() } })
       .then(function(r) { return r.json(); })
       .then(function(res) {
@@ -131,7 +133,7 @@ export default function AdminPage() {
           });
         }
       })
-      .catch(function(e) { console.log("GA fetch error:", e); });
+      .then(function() { setGaLoading(false); }).catch(function(e) { console.log("GA fetch error:", e); setGaLoading(false); });
   }
 
   function loadPrompts() {
@@ -394,8 +396,8 @@ export default function AdminPage() {
                 </svg>
                 <span style={{ fontSize: 14, color: t.text, fontWeight: 500 }}>Google Analytics</span>
                 <span style={{ fontSize: 11, color: t.dim, marginLeft: 'auto' }}>최근 7일 기준</span>
-                <button onClick={loadStats} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4 }}>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={t.dim} strokeWidth="1.5">
+                <button onClick={loadStats} style={{ background: "none", border: "none", cursor: "pointer", padding: 4 }}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={t.dim} strokeWidth="1.5" style={{ animation: gaLoading ? "spin 1s linear infinite" : "none", transition: "all 0.3s" }}>
                     <path d="M21 12a9 9 0 11-9-9c2.52 0 4.93 1 6.74 2.74L21 8" /><path d="M21 3v5h-5" />
                   </svg>
                 </button>

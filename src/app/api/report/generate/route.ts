@@ -53,11 +53,23 @@ export async function POST(request: NextRequest) {
       .eq('id', profileId)
       .single();
 
-    if (!profileResult.data) {
+    var profile = profileResult.data;
+    
+    if (!profile && isDemo) {
+      profile = {
+        year_pillar: '무인',
+        month_pillar: '정사',
+        day_pillar: '무오',
+        hour_pillar: '정사',
+        day_master: '무',
+        day_master_element: '토',
+        five_elements: { '목': 1, '화': 5, '토': 2, '금': 0, '수': 0 },
+      };
+    }
+    
+    if (!profile) {
       return NextResponse.json({ success: false, error: '사주 프로필을 찾을 수 없습니다' }, { status: 404 });
     }
-
-    var profile = profileResult.data;
     var yearP = profile.year_pillar;
     var monthP = profile.month_pillar;
     var dayP = profile.day_pillar;

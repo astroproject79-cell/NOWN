@@ -1,9 +1,12 @@
 import { calculateFourPillars } from './luckiwi/core/fourPillars';
 import { FourPillarsResult } from './luckiwi/core/fourPillars';
 
-const ELEMENT_MAP: Record<string, string> = {
+const STEM_ELEMENT: Record<string, string> = {
   '갑': '목', '을': '목', '병': '화', '정': '화', '무': '토',
   '기': '토', '경': '금', '신': '금', '임': '수', '계': '수',
+};
+
+const BRANCH_ELEMENT: Record<string, string> = {
   '자': '수', '축': '토', '인': '목', '묘': '목', '진': '토', '사': '화',
   '오': '화', '미': '토', '신': '금', '유': '금', '술': '토', '해': '수',
 };
@@ -63,18 +66,20 @@ export async function calculateSaju(
   const hourPillar = hour && hour !== 'unknown' ? fp.hour.full : '미상';
   const dayMaster = fp.day.stem;
 
-  const allChars = [
-    fp.year.stem, fp.year.branch,
-    fp.month.stem, fp.month.branch,
-    fp.day.stem, fp.day.branch,
-  ];
+  const stems = [fp.year.stem, fp.month.stem, fp.day.stem];
+  const branches = [fp.year.branch, fp.month.branch, fp.day.branch];
   if (hour && hour !== 'unknown') {
-    allChars.push(fp.hour.stem, fp.hour.branch);
+    stems.push(fp.hour.stem);
+    branches.push(fp.hour.branch);
   }
 
   const elements: Record<string, number> = { '목': 0, '화': 0, '토': 0, '금': 0, '수': 0 };
-  allChars.forEach((char) => {
-    const el = ELEMENT_MAP[char];
+  stems.forEach((s) => {
+    const el = STEM_ELEMENT[s];
+    if (el) elements[el]++;
+  });
+  branches.forEach((b) => {
+    const el = BRANCH_ELEMENT[b];
     if (el) elements[el]++;
   });
 
@@ -84,7 +89,7 @@ export async function calculateSaju(
     dayPillar,
     hourPillar,
     dayMaster,
-    dayMasterElement: ELEMENT_MAP[dayMaster] || '',
+    dayMasterElement: STEM_ELEMENT[dayMaster] || '',
     elements,
     raw: result,
   };

@@ -4,18 +4,19 @@ import Link from 'next/link'
 
 export default function Header() {
   return (
-    <header style={{
+    <header className="header-safe" style={{
       position: 'fixed',
       top: 0,
       left: 0,
       right: 0,
-      paddingTop: 'env(safe-area-inset-top)',
-      height: 'calc(60px + env(safe-area-inset-top))',
+      minHeight: '60px',
       display: 'flex',
-      alignItems: 'center',
+      alignItems: 'flex-end',
       justifyContent: 'space-between',
-      padding: 'env(safe-area-inset-top) 24px 0 24px',
-      background: 'rgba(10, 10, 15, 0.8)',
+      paddingLeft: '24px',
+      paddingRight: '24px',
+      paddingBottom: '16px',
+      background: 'rgba(10, 10, 15, 0.9)',
       backdropFilter: 'blur(20px)',
       borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
       zIndex: 100,

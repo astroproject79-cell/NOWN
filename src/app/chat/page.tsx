@@ -251,7 +251,7 @@ export default function ChatPage() {
                 outline: 'none', transition: 'border 0.3s',
               }}
             />
-            <div
+            <button
               onClick={send}
               disabled={!input.trim() || isStreaming}
               style={{
@@ -269,7 +269,7 @@ export default function ChatPage() {
                 <line x1="22" y1="2" x2="11" y2="13" />
                 <polygon points="22 2 15 22 11 13 2 9 22 2" />
               </svg>
-            </div>
+            </button>
           </div>
         </div>
       </div>

@@ -1,44 +1,24 @@
-const STEM_MAP: Record<string, string> = {
-  '甲': '갑', '乙': '을', '丙': '병', '丁': '정', '戊': '무',
-  '己': '기', '庚': '경', '辛': '신', '壬': '임', '癸': '계',
-};
-
-const BRANCH_MAP: Record<string, string> = {
-  '子': '자', '丑': '축', '寅': '인', '卯': '묘', '辰': '진', '巳': '사',
-  '午': '오', '未': '미', '申': '신', '酉': '유', '戌': '술', '亥': '해',
-};
+import { calculateFourPillars } from './luckiwi/core/fourPillars';
+import { FourPillarsResult } from './luckiwi/core/fourPillars';
 
 const ELEMENT_MAP: Record<string, string> = {
   '갑': '목', '을': '목', '병': '화', '정': '화', '무': '토',
   '기': '토', '경': '금', '신': '금', '임': '수', '계': '수',
+  '자': '수', '축': '토', '인': '목', '묘': '목', '진': '토', '사': '화',
+  '오': '화', '미': '토', '신': '금', '유': '금', '술': '토', '해': '수',
 };
 
-const HOUR_STEM_MAP: Record<string, string[]> = {
-  '갑': ['갑', '을', '병', '정', '무', '기', '경', '신', '임', '계', '갑', '을'],
-  '기': ['갑', '을', '병', '정', '무', '기', '경', '신', '임', '계', '갑', '을'],
-  '을': ['병', '정', '무', '기', '경', '신', '임', '계', '갑', '을', '병', '정'],
-  '경': ['병', '정', '무', '기', '경', '신', '임', '계', '갑', '을', '병', '정'],
-  '병': ['무', '기', '경', '신', '임', '계', '갑', '을', '병', '정', '무', '기'],
-  '신': ['무', '기', '경', '신', '임', '계', '갑', '을', '병', '정', '무', '기'],
-  '정': ['경', '신', '임', '계', '갑', '을', '병', '정', '무', '기', '경', '신'],
-  '임': ['경', '신', '임', '계', '갑', '을', '병', '정', '무', '기', '경', '신'],
-  '무': ['임', '계', '갑', '을', '병', '정', '무', '기', '경', '신', '임', '계'],
-  '계': ['임', '계', '갑', '을', '병', '정', '무', '기', '경', '신', '임', '계'],
+const HOUR_RANGES: Record<string, number> = {
+  '23-01': 0, '01-03': 1, '03-05': 2, '05-07': 3,
+  '07-09': 4, '09-11': 5, '11-13': 6, '13-15': 7,
+  '15-17': 8, '17-19': 9, '19-21': 10, '21-23': 11,
 };
 
-const HOUR_BRANCH = ['자', '축', '인', '묘', '진', '사', '오', '미', '신', '유', '술', '해'];
-
-function toKorean(chinese: string): string {
-  return chinese.split('').map((c) => STEM_MAP[c] || BRANCH_MAP[c] || c).join('');
-}
-
-function getHourIndex(hour: string): number {
-  const map: Record<string, number> = {
-    '23-01': 0, '01-03': 1, '03-05': 2, '05-07': 3,
-    '07-09': 4, '09-11': 5, '11-13': 6, '13-15': 7,
-    '15-17': 8, '17-19': 9, '19-21': 10, '21-23': 11,
-  };
-  return map[hour] ?? -1;
+function hourRangeToHour(range: string): number {
+  const idx = HOUR_RANGES[range];
+  if (idx === undefined) return 12;
+  const hours = [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22];
+  return hours[idx];
 }
 
 export interface SajuResult {
@@ -49,6 +29,7 @@ export interface SajuResult {
   dayMaster: string;
   dayMasterElement: string;
   elements: Record<string, number>;
+  raw?: FourPillarsResult;
 }
 
 export async function calculateSaju(
@@ -57,46 +38,42 @@ export async function calculateSaju(
   calendar: string
 ): Promise<SajuResult> {
   const [year, month, day] = birth.split('-').map(Number);
-  const { Solar, Lunar } = await import('lunar-javascript');
 
-  let solar;
+  let solarYear = year;
+  let solarMonth = month;
+  let solarDay = day;
+
   if (calendar === 'lunar') {
+    const { Lunar } = await import('lunar-javascript');
     const lunar = Lunar.fromYmd(year, month, day);
-    solar = lunar.getSolar();
-  } else {
-    solar = Solar.fromYmd(year, month, day);
+    const solar = lunar.getSolar();
+    solarYear = solar.getYear();
+    solarMonth = solar.getMonth();
+    solarDay = solar.getDay();
   }
 
-  const lunar = solar.getLunar();
-  const bazi = lunar.getEightChar();
+  const calcHour = hour && hour !== 'unknown' ? hourRangeToHour(hour) : 12;
 
-  const yearPillar = toKorean(bazi.getYear());
-  const monthPillar = toKorean(bazi.getMonth());
-  const dayPillar = toKorean(bazi.getDay());
-  const dayMaster = toKorean(bazi.getDayGan());
+  const result = calculateFourPillars(solarYear, solarMonth, solarDay, calcHour, 0);
 
-  let hourPillar = '미상';
+  const fp = result.fourPillars;
+  const yearPillar = fp.year.full;
+  const monthPillar = fp.month.full;
+  const dayPillar = fp.day.full;
+  const hourPillar = hour && hour !== 'unknown' ? fp.hour.full : '미상';
+  const dayMaster = fp.day.stem;
+
+  const allChars = [
+    fp.year.stem, fp.year.branch,
+    fp.month.stem, fp.month.branch,
+    fp.day.stem, fp.day.branch,
+  ];
   if (hour && hour !== 'unknown') {
-    const idx = getHourIndex(hour);
-    if (idx >= 0) {
-      const stems = HOUR_STEM_MAP[dayMaster];
-      if (stems) {
-        hourPillar = stems[idx] + HOUR_BRANCH[idx];
-      }
-    }
+    allChars.push(fp.hour.stem, fp.hour.branch);
   }
-
-  const allStems = [
-    yearPillar[0], monthPillar[0], dayPillar[0],
-    ...(hourPillar !== '미상' ? [hourPillar[0]] : []),
-  ];
-  const allBranches = [
-    yearPillar[1], monthPillar[1], dayPillar[1],
-    ...(hourPillar !== '미상' ? [hourPillar[1]] : []),
-  ];
 
   const elements: Record<string, number> = { '목': 0, '화': 0, '토': 0, '금': 0, '수': 0 };
-  [...allStems, ...allBranches].forEach((char) => {
+  allChars.forEach((char) => {
     const el = ELEMENT_MAP[char];
     if (el) elements[el]++;
   });
@@ -109,6 +86,7 @@ export async function calculateSaju(
     dayMaster,
     dayMasterElement: ELEMENT_MAP[dayMaster] || '',
     elements,
+    raw: result,
   };
 }
 

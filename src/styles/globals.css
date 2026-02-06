@@ -137,3 +137,12 @@ body {
     justify-content: center !important;
   }
 }
+
+/* Hide horizontal scrollbar but keep functionality */
+[style*="overflow"] {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+[style*="overflow"]::-webkit-scrollbar {
+  display: none;
+}

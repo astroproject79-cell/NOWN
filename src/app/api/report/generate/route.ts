@@ -70,7 +70,7 @@ export async function POST(request: NextRequest) {
       .eq('status', 'completed')
       .maybeSingle();
 
-    if (existingReport.data) {
+    if (existingReport.data && !isDemo) {
       return NextResponse.json({
         success: true,
         reportId: existingReport.data.id,

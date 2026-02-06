@@ -171,7 +171,7 @@ export default function PaymentPage() {
             cursor: 'pointer', fontFamily: "'Pretendard',sans-serif", transition: 'all 0.3s',
           }}
         >
-          🧪 데모 결제 (개발용)
+          ⟨테스트⟩ 데모 결제
         </button>
 
         <p style={{ fontSize: 11, color: t.dim, marginTop: 16, opacity: 0.5 }}>

@@ -1,0 +1,210 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "dayPillars.schema.json",
+  "title": "DayPillarsInterpretation",
+  "description": "60일주 해석 데이터 스키마",
+  "type": "object",
+  "required": ["version", "data"],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string",
+      "description": "데이터 버전"
+    },
+    "lastUpdated": {
+      "type": "string",
+      "format": "date",
+      "description": "마지막 업데이트 일자"
+    },
+    "description": {
+      "type": "string"
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "데이터 출처 목록"
+    },
+    "data": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/DayPillarInterpretation"
+      }
+    }
+  },
+  "definitions": {
+    "ClassicalKeyword": {
+      "type": "object",
+      "required": ["term", "hanja"],
+      "properties": {
+        "term": {
+          "type": "string",
+          "description": "한글 용어"
+        },
+        "hanja": {
+          "type": "string",
+          "description": "한자"
+        },
+        "source": {
+          "type": "string",
+          "description": "출처"
+        },
+        "meaning": {
+          "type": "string",
+          "description": "간략한 의미"
+        }
+      }
+    },
+    "DayPillarInterpretation": {
+      "type": "object",
+      "required": ["name", "hanja", "stem", "branch", "keywords", "basic", "personality", "career", "relationship", "advice"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "일주 이름 (예: 경자)"
+        },
+        "hanja": {
+          "type": "string",
+          "description": "일주 한자 (예: 庚子)"
+        },
+        "stem": {
+          "type": "string",
+          "description": "일간 (예: 경)"
+        },
+        "branch": {
+          "type": "string",
+          "description": "일지 (예: 자)"
+        },
+        "keywords": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ClassicalKeyword"
+          },
+          "description": "핵심 키워드 (고전)"
+        },
+        "basic": {
+          "type": "object",
+          "required": ["summary", "description"],
+          "properties": {
+            "summary": {
+              "type": "string",
+              "description": "핵심 특성 요약"
+            },
+            "description": {
+              "type": "string",
+              "description": "상세 설명"
+            }
+          }
+        },
+        "personality": {
+          "type": "object",
+          "required": ["strengths", "weaknesses", "description"],
+          "properties": {
+            "strengths": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "장점 목록"
+            },
+            "weaknesses": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "단점 목록"
+            },
+            "description": {
+              "type": "string",
+              "description": "성격 상세 설명"
+            }
+          }
+        },
+        "career": {
+          "type": "object",
+          "required": ["suitable", "description"],
+          "properties": {
+            "suitable": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "적합한 직업 분야"
+            },
+            "unsuitable": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "비적합한 직업 분야"
+            },
+            "description": {
+              "type": "string",
+              "description": "직업적성 상세 설명"
+            }
+          }
+        },
+        "relationship": {
+          "type": "object",
+          "required": ["traits", "description"],
+          "properties": {
+            "traits": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "대인관계 특징"
+            },
+            "description": {
+              "type": "string",
+              "description": "대인관계 상세 설명"
+            }
+          }
+        },
+        "advice": {
+          "type": "object",
+          "required": ["leverageStrength", "caution", "action"],
+          "properties": {
+            "leverageStrength": {
+              "type": "string",
+              "description": "장점 활용법"
+            },
+            "caution": {
+              "type": "string",
+              "description": "주의할 점"
+            },
+            "action": {
+              "type": "string",
+              "description": "실천 방안"
+            }
+          }
+        },
+        "meta": {
+          "type": "object",
+          "properties": {
+            "polarity": {
+              "type": "string",
+              "enum": ["yang", "yin"],
+              "description": "음양"
+            },
+            "stemElement": {
+              "type": "string",
+              "description": "일간 오행"
+            },
+            "branchElement": {
+              "type": "string",
+              "description": "일지 오행"
+            },
+            "branchTenGod": {
+              "type": "string",
+              "description": "일지 십신"
+            }
+          }
+        }
+      }
+    }
+  }
+}

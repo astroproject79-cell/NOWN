@@ -1,0 +1,341 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2026-01-05",
+  "description": "점성학 해석 품질 평가 차원 및 기준 정의",
+  "dimensions": [
+    {
+      "id": "astronomicalAccuracy",
+      "name": "천문학적 정확성",
+      "description": "해석이 실제 차트 데이터와 일치하는지 평가",
+      "weight": 20,
+      "criteria": [
+        {
+          "id": "accuracy_sun_sign",
+          "name": "태양 사인 일치",
+          "description": "태양 사인이 정확하게 언급되는가",
+          "checkType": "presence",
+          "target": true,
+          "maxScore": 5
+        },
+        {
+          "id": "accuracy_moon_sign",
+          "name": "달 사인 일치",
+          "description": "달 사인이 정확하게 언급되는가",
+          "checkType": "presence",
+          "target": true,
+          "maxScore": 5
+        },
+        {
+          "id": "accuracy_ascendant",
+          "name": "상승점 일치",
+          "description": "상승점이 정확하게 언급되는가",
+          "checkType": "presence",
+          "target": true,
+          "maxScore": 5
+        },
+        {
+          "id": "accuracy_houses",
+          "name": "하우스 배치",
+          "description": "행성-하우스 배치가 언급되는가",
+          "checkType": "count",
+          "target": 5,
+          "min": 3,
+          "maxScore": 5
+        },
+        {
+          "id": "accuracy_aspects",
+          "name": "애스펙트 언급",
+          "description": "주요 애스펙트가 언급되는가",
+          "checkType": "count",
+          "target": 3,
+          "min": 1,
+          "maxScore": 5
+        },
+        {
+          "id": "accuracy_chart_type",
+          "name": "차트 유형",
+          "description": "주간/야간 차트가 정확히 언급되는가",
+          "checkType": "presence",
+          "target": true,
+          "maxScore": 5
+        }
+      ]
+    },
+    {
+      "id": "interpretationConsistency",
+      "name": "해석 일관성",
+      "description": "행성-사인-하우스 해석이 맥락적으로 일관되는지 평가",
+      "weight": 15,
+      "criteria": [
+        {
+          "id": "consistency_planet_sign",
+          "name": "행성-사인 연결",
+          "description": "행성 특성과 사인 특성이 자연스럽게 융합되는가",
+          "checkType": "presence",
+          "target": true,
+          "maxScore": 10
+        },
+        {
+          "id": "consistency_house_context",
+          "name": "하우스 맥락",
+          "description": "하우스의 삶 영역에 맞게 해석되는가",
+          "checkType": "presence",
+          "target": true,
+          "maxScore": 10
+        },
+        {
+          "id": "consistency_overall_theme",
+          "name": "전체 테마",
+          "description": "차트 전체를 관통하는 메시지가 있는가",
+          "checkType": "presence",
+          "target": true,
+          "maxScore": 10
+        }
+      ]
+    },
+    {
+      "id": "symbolism",
+      "name": "상징 활용",
+      "description": "원소, 성질, 신화 등 상징을 효과적으로 사용하는지 평가",
+      "weight": 10,
+      "criteria": [
+        {
+          "id": "symbol_element",
+          "name": "원소 활용",
+          "description": "불/흙/공기/물 원소 비유가 사용되는가",
+          "checkType": "count",
+          "target": 3,
+          "min": 1,
+          "maxScore": 10
+        },
+        {
+          "id": "symbol_nature",
+          "name": "자연 비유",
+          "description": "계절, 자연 현상 비유가 사용되는가",
+          "checkType": "count",
+          "target": 3,
+          "min": 1,
+          "maxScore": 10
+        },
+        {
+          "id": "symbol_consistent",
+          "name": "상징 일관성",
+          "description": "문서 전체에서 상징이 일관되게 사용되는가",
+          "checkType": "ratio",
+          "target": 0.7,
+          "min": 0.5,
+          "maxScore": 10
+        }
+      ]
+    },
+    {
+      "id": "empathy",
+      "name": "공감 지수",
+      "description": "도전적 배치를 공감적으로 설명하는지 평가",
+      "weight": 15,
+      "criteria": [
+        {
+          "id": "empathy_acknowledge",
+          "name": "어려움 인정",
+          "description": "'쉽지 않았을', '어려웠을' 등 인정 표현이 있는가",
+          "checkType": "count",
+          "target": 3,
+          "min": 1,
+          "maxScore": 10
+        },
+        {
+          "id": "empathy_growth",
+          "name": "성장 관점",
+          "description": "도전을 성장 기회로 프레이밍하는가",
+          "checkType": "presence",
+          "target": true,
+          "maxScore": 8
+        },
+        {
+          "id": "empathy_not_fault",
+          "name": "탓하지 않음",
+          "description": "'당신 탓이 아닙니다' 등 위로 표현이 있는가",
+          "checkType": "presence",
+          "target": true,
+          "maxScore": 7
+        },
+        {
+          "id": "empathy_second_person",
+          "name": "2인칭 사용",
+          "description": "'당신'이라는 호칭을 사용하는가",
+          "checkType": "count",
+          "target": 5,
+          "min": 2,
+          "maxScore": 5
+        }
+      ]
+    },
+    {
+      "id": "hope",
+      "name": "희망 지수",
+      "description": "긍정적 미래 전망을 제시하는지 평가",
+      "weight": 10,
+      "criteria": [
+        {
+          "id": "hope_future",
+          "name": "미래 전망",
+          "description": "긍정적 미래 전망이 제시되는가",
+          "checkType": "presence",
+          "target": true,
+          "maxScore": 10
+        },
+        {
+          "id": "hope_talent",
+          "name": "재능 강조",
+          "description": "조화로운 배치의 재능이 언급되는가",
+          "checkType": "presence",
+          "target": true,
+          "maxScore": 8
+        },
+        {
+          "id": "hope_closing",
+          "name": "희망적 마무리",
+          "description": "섹션들이 희망적으로 마무리되는가",
+          "checkType": "ratio",
+          "target": 0.7,
+          "min": 0.5,
+          "maxScore": 7
+        },
+        {
+          "id": "hope_possibility",
+          "name": "가능성 표현",
+          "description": "'~할 수 있습니다' 등 가능성 표현이 있는가",
+          "checkType": "count",
+          "target": 3,
+          "min": 1,
+          "maxScore": 5
+        }
+      ]
+    },
+    {
+      "id": "practicality",
+      "name": "실용성",
+      "description": "구체적이고 실천 가능한 조언을 제시하는지 평가",
+      "weight": 10,
+      "criteria": [
+        {
+          "id": "practical_advice",
+          "name": "실천 조언",
+          "description": "'~하세요' 등 구체적 조언이 있는가",
+          "checkType": "count",
+          "target": 3,
+          "min": 1,
+          "maxScore": 10
+        },
+        {
+          "id": "practical_element",
+          "name": "원소 보완",
+          "description": "부족한 원소 보완 방법이 구체적인가",
+          "checkType": "presence",
+          "target": true,
+          "maxScore": 7
+        },
+        {
+          "id": "practical_career",
+          "name": "직업 적성",
+          "description": "적합한 직업 분야가 구체적으로 제시되는가",
+          "checkType": "count",
+          "target": 3,
+          "min": 1,
+          "maxScore": 8
+        },
+        {
+          "id": "practical_color_direction",
+          "name": "색상/방향",
+          "description": "개운 색상, 방향 등이 언급되는가",
+          "checkType": "presence",
+          "target": true,
+          "maxScore": 5
+        }
+      ]
+    },
+    {
+      "id": "tone",
+      "name": "톤 적절성",
+      "description": "단정을 피하고 가능성으로 서술하는지 평가",
+      "weight": 10,
+      "criteria": [
+        {
+          "id": "tone_non_definitive",
+          "name": "단정 회피",
+          "description": "단정적 표현 대신 가능성 표현을 사용하는가",
+          "checkType": "ratio",
+          "target": 0.7,
+          "min": 0.5,
+          "maxScore": 10
+        },
+        {
+          "id": "tone_possibility",
+          "name": "경향성 표현",
+          "description": "'경향이 있습니다', '~일 수 있습니다' 표현 사용",
+          "checkType": "count",
+          "target": 5,
+          "min": 2,
+          "maxScore": 8
+        },
+        {
+          "id": "tone_disclaimer",
+          "name": "면책 표현",
+          "description": "'운명이 아닌', '가능성' 등 면책 문구가 있는가",
+          "checkType": "presence",
+          "target": true,
+          "maxScore": 7
+        },
+        {
+          "id": "tone_respectful",
+          "name": "존중적 어조",
+          "description": "독자를 존중하는 어조가 유지되는가",
+          "checkType": "sentiment",
+          "target": "positive",
+          "maxScore": 5
+        }
+      ]
+    },
+    {
+      "id": "readability",
+      "name": "가독성",
+      "description": "전문용어를 쉽게 설명하는지 평가",
+      "weight": 10,
+      "criteria": [
+        {
+          "id": "readability_terms",
+          "name": "용어 설명",
+          "description": "점성학 용어에 괄호 설명이 있는가",
+          "checkType": "ratio",
+          "target": 0.8,
+          "min": 0.5,
+          "maxScore": 10
+        },
+        {
+          "id": "readability_korean",
+          "name": "한글 사용",
+          "description": "영어 용어 대신 한글 표현을 사용하는가",
+          "checkType": "presence",
+          "target": true,
+          "maxScore": 8
+        },
+        {
+          "id": "readability_paragraph",
+          "name": "문단 구분",
+          "description": "문단이 적절히 나뉘어 있는가",
+          "checkType": "presence",
+          "target": true,
+          "maxScore": 7
+        },
+        {
+          "id": "readability_section",
+          "name": "섹션 구분",
+          "description": "섹션 간 구분이 명확한가",
+          "checkType": "presence",
+          "target": true,
+          "maxScore": 5
+        }
+      ]
+    }
+  ]
+}

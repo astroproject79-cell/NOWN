@@ -118,7 +118,6 @@ export function generateReportData(yearP: string, monthP: string, dayP: string, 
   if (analysis.structure) {
     structInfo.type = analysis.structure.primary?.type || '';
     structInfo.category = analysis.structure.primary?.category || '';
-    structInfo.description = analysis.structure.primary?.description || '';
   }
 
   var usefulInfo = { element: '', method: '', jealousGod: '', helpfulGod: '', reasoning: '' };

@@ -208,6 +208,10 @@ export default function ReportViewerPage() {
         </div>
 
         <div style={{ textAlign: 'center', marginTop: 40, paddingBottom: 40 }}>
+          <button onClick={function() { window.print(); }} style={{ padding: "12px 24px", background: "rgba(" + accentRgba + ",0.1)", border: "1px solid rgba(" + accentRgba + ",0.15)", borderRadius: 8, color: t.text, fontSize: 13, cursor: "pointer", marginBottom: 16, display: "flex", alignItems: "center", gap: 8, margin: "0 auto 16px" }}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+            PDF 저장
+          </button>
           <p style={{ fontSize: 11, color: t.dim, opacity: 0.4 }}>
             {report.total_chars?.toLocaleString()}자 · {new Date(report.created_at).toLocaleDateString('ko-KR')} 생성
           </p>

@@ -94,9 +94,9 @@ export function generateReportData(yearP: string, monthP: string, dayP: string, 
   var tenGodCounts: Record<string, number> = {};
   if (analysis.tenGods) {
     var tg = analysis.tenGods;
-    if (tg.counts) {
-      for (var k in tg.counts) {
-        tenGodCounts[k] = (tg.counts as any)[k] || 0;
+    if (tg.count) {
+      for (var k in tg.count) {
+        tenGodCounts[k] = (tg.count as any)[k] || 0;
       }
     }
   }

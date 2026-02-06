@@ -115,7 +115,7 @@ function PaymentSuccessContent() {
   return (
     <div style={{ minHeight: '100vh', background: t.bg, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <AmbientCanvas theme={store.theme} />
-      <div style={{ position: 'relative', zIndex: 10, textAlign: 'center', padding: '0 20px' }}>
+      <div style={{ position: 'relative', zIndex: 10, textAlign: 'center', padding: '0 20px', width: '100%', maxWidth: 400, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <div style={{ marginBottom: 32 }}>
           {status === 'error' ? (
             <svg width="48" height="48" viewBox="0 0 48 48" fill="none">

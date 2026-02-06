@@ -81,6 +81,6 @@ export async function POST(request: NextRequest) {
     });
   } catch (err) {
     console.error('Saju calc error:', err);
-    return NextResponse.json({ success: false, error: '계산 오류', details: err instanceof Error ? err.message : JSON.stringify(err) }, { status: 500 });
+    return NextResponse.json({ success: false, error: '계산 오류' }, { status: 500 });
   }
 }

@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import Script from 'next/script';
 import '@/styles/globals.css';
+import FloatingChatButton from '@/components/ui/FloatingChatButton';
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID || '';
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || '';
@@ -72,6 +73,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </noscript>
         )}
         {children}
+        <FloatingChatButton />
         {GA_ID && (
           <>
             <Script

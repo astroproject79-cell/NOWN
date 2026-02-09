@@ -225,6 +225,19 @@ export default function LandingPage() {
               개인정보처리방침
             </span>
             <span style={{ fontSize: 10, color: t.dim, opacity: 0.15 }}>·</span>
+            <span
+              onClick={() => router.push("/terms")}
+              style={{
+                fontFamily: "'Pretendard',-apple-system,sans-serif",
+                fontSize: 10, color: t.dim, opacity: 0.3, cursor: "pointer",
+                transition: "opacity 0.3s",
+              }}
+              onMouseEnter={e => { e.currentTarget.style.opacity = "0.6"; }}
+              onMouseLeave={e => { e.currentTarget.style.opacity = "0.3"; }}
+            >
+              이용약관
+            </span>
+            <span style={{ fontSize: 10, color: t.dim, opacity: 0.15 }}>·</span>
             <span style={{
               fontFamily: "'Pretendard',-apple-system,sans-serif",
               fontSize: 10, color: t.dim, opacity: 0.3,

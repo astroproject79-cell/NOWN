@@ -6,11 +6,23 @@ import { useStore } from '@/lib/store';
 import { themes } from '@/lib/theme';
 import AmbientCanvas from '@/components/canvas/AmbientCanvas';
 import Header from '@/components/ui/Header';
+import ManseTable from '@/components/ui/ManseTable';
 
 interface Msg {
   id: string;
   role: 'user' | 'assistant';
   content: string;
+}
+
+interface SajuData {
+  fourPillars: {
+    year: { stem: string; branch: string };
+    month: { stem: string; branch: string };
+    day: { stem: string; branch: string };
+    hour: { stem: string; branch: string };
+  };
+  fiveElements: Record<string, number>;
+  dayMaster?: { char: string; element: string };
 }
 
 function cleanCTA(text: string) {
@@ -34,6 +46,40 @@ export default function ChatPage() {
   var [input, setInput] = useState('');
   var [isStreaming, setIsStreaming] = useState(false);
   var [ready, setReady] = useState(false);
+  var [sajuData, setSajuData] = useState<SajuData | null>(null);
+
+  useEffect(function() {
+    if (sajuInput && sajuInput.birthDate) {
+      fetch('/api/saju/calculate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: sajuInput.name || '사용자',
+          birthDate: sajuInput.birthDate,
+          birthTime: sajuInput.birthTime,
+          gender: sajuInput.gender,
+          isLunar: sajuInput.isLunar,
+        }),
+      })
+        .then(function(r) { return r.json(); })
+        .then(function(res) {
+          if (res.success && res.data) {
+            var d = res.data;
+            setSajuData({
+              fourPillars: {
+                year: { stem: d.fourPillars.year.stem, branch: d.fourPillars.year.branch },
+                month: { stem: d.fourPillars.month.stem, branch: d.fourPillars.month.branch },
+                day: { stem: d.fourPillars.day.stem, branch: d.fourPillars.day.branch },
+                hour: { stem: d.fourPillars.hour.stem, branch: d.fourPillars.hour.branch },
+              },
+              fiveElements: d.fiveElements,
+              dayMaster: d.dayMaster,
+            });
+          }
+        })
+        .catch(function() {});
+    }
+  }, [sajuInput]);
 
   useEffect(function() {
     if (messages.length > 0 && !isStreaming) {
@@ -46,6 +92,7 @@ export default function ChatPage() {
       }
     }
   }, [messages, isStreaming, router]);
+
   var bottomRef = useRef<HTMLDivElement>(null);
   var inputRef = useRef<HTMLInputElement>(null);
   var streamContent = useRef('');
@@ -170,6 +217,11 @@ export default function ChatPage() {
         maxWidth: 640, width: '100%', margin: '0 auto', padding: '80px 0 0',
       }}>
         <div style={{ flex: 1, overflowY: 'auto', padding: '24px 20px', display: 'flex', flexDirection: 'column', gap: 16 }}>
+          
+          {sajuData && sajuData.fourPillars && (
+            <ManseTable fourPillars={sajuData.fourPillars} fiveElements={sajuData.fiveElements} />
+          )}
+
           {messages.map(function(msg) {
             var isUser = msg.role === 'user';
             var isLast = msg.id === messages[messages.length - 1].id;
@@ -209,7 +261,6 @@ export default function ChatPage() {
                   </div>
                   {showCTA && (
                     <div
-                      
                       style={{
                         marginTop: 10, width: '100%', padding: '14px 20px',
                         background: 'linear-gradient(135deg, rgba(' + accentRgba + ',0.2), rgba(' + accent2Rgba + ',0.15))',

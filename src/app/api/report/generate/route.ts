@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
 
     if (isDemo && (!userId || userId.startsWith('DEMO_'))) {
       var demoUser = await supabaseAdmin.from('users').insert({
-        name: '데모사용자',
+        name: body.name || body.sajuInput?.name || '사용자',
         birth_date: '1998-05-11',
         birth_time: '09-11',
         gender: 'female',

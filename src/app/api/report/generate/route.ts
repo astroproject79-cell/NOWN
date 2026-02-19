@@ -136,11 +136,15 @@ export async function POST(request: NextRequest) {
       .single();
 
     var userInfo = userResult.data || {};
+    if ((!userInfo.name || userInfo.name === '사용자') && body.name) {
+      userInfo.name = body.name;
+      await supabaseAdmin.from('users').update({ name: body.name }).eq('id', userId);
+    }
 
     var sections: Record<string, string> = {};
     var promises = sectionPrompts.map(function(section) {
       var prompt = [
-        '사용자 정보: ' + JSON.stringify(userInfo),
+        '사용자 이름: ' + (userInfo.name || '사용자') + ', 생년월일: ' + (userInfo.birth_date || '') + ', 성별: ' + (userInfo.gender || '') + ', 관심분야: ' + (userInfo.focus_area || '종합'),
         '',
         '사주 분석 데이터:',
         sajuContext,

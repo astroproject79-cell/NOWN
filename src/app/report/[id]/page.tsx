@@ -28,6 +28,16 @@ var ELEMENT_COLORS: Record<string, string> = {
   '목': '#4ade80', '화': '#f87171', '토': '#fbbf24', '금': '#e2e8f0', '수': '#60a5fa',
 };
 
+var ELEMENT_TO_FILE: Record<string, string> = {
+  '목': 'wood', '화': 'fire', '토': 'earth', '금': 'metal', '수': 'water',
+};
+
+function getCharacterImage(element: string, gender: string) {
+  var base = ELEMENT_TO_FILE[element] || 'earth';
+  var suffix = gender === 'male' ? 'm' : 'f';
+  return '/characters/' + base + '-' + suffix + '.png';
+}
+
 export default function ReportViewerPage() {
   var params = useParams();
   var store = useStore();
@@ -88,7 +98,20 @@ export default function ReportViewerPage() {
       <div style={{ maxWidth: 720, margin: '0 auto', padding: '80px 20px 60px' }}>
 
         <div style={{ textAlign: 'center', marginBottom: 48 }}>
-          <h1 style={{ fontFamily: "'ZEN SERIF TTF',sans-serif", fontSize: 24, color: t.text, fontWeight: 400, marginBottom: 8 }}>프리미엄 사주 리포트</h1>
+          <div style={{
+            width: 120, height: 120, margin: '0 auto 20px', borderRadius: '50%',
+            overflow: 'hidden', border: '2px solid rgba(' + accentRgba + ',0.2)',
+            boxShadow: '0 0 24px rgba(' + accentRgba + ',0.15), 0 0 48px rgba(' + accentRgba + ',0.08)',
+          }}>
+            <img
+              src={getCharacterImage(dm.element || '토', report.user_gender || 'female')}
+              alt=""
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            />
+          </div>
+          <h1 style={{ fontFamily: "'ZEN SERIF TTF',sans-serif", fontSize: 24, color: t.text, fontWeight: 400, marginBottom: 8 }}>
+            {report.user_name && report.user_name !== '사용자' ? report.user_name + '님의 사주 리포트' : '프리미엄 사주 리포트'}
+          </h1>
           <p style={{ fontSize: 13, color: t.dim }}>{report.total_chars?.toLocaleString()}자 · {report.model}</p>
         </div>
 

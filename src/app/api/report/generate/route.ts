@@ -135,7 +135,7 @@ export async function POST(request: NextRequest) {
       .eq('id', userId)
       .single();
 
-    var userInfo = userResult.data || {};
+    var userInfo: any = userResult.data || {};
     if ((!userInfo.name || userInfo.name === '사용자') && body.name) {
       userInfo.name = body.name;
       await supabaseAdmin.from('users').update({ name: body.name }).eq('id', userId);

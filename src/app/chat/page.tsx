@@ -232,14 +232,12 @@ export default function ChatPage() {
               <div key={msg.id} style={{ display: 'flex', justifyContent: isUser ? 'flex-end' : 'flex-start', animation: 'fadeSlide 0.4s both' }}>
                 {!isUser && (
                   <div style={{
-                    width: 28, height: 28, borderRadius: '50%', flexShrink: 0, marginRight: 10, marginTop: 2,
-                    border: '1px solid rgba(' + accentRgba + ',0.15)',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    width: 32, height: 32, borderRadius: '50%', flexShrink: 0, marginRight: 10, marginTop: 2,
+                    overflow: 'hidden',
+                    border: '1.5px solid rgba(' + accentRgba + ',0.25)',
+                    boxShadow: '0 0 8px rgba(' + accentRgba + ',0.15)',
                   }}>
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
-                      <circle cx="12" cy="12" r="10" stroke={t.accent} strokeWidth="1" opacity="0.6" />
-                      <circle cx="12" cy="12" r="2.5" fill={t.accent} opacity="0.8" />
-                    </svg>
+                    <img src="/characters/avatar-f.png" alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   </div>
                 )}
                 <div style={{ maxWidth: '75%' }}>

@@ -105,13 +105,22 @@ export default function ChatPage() {
       .then(function(res) {
         var d = res.data || {};
         var botName = d.bot_name || '별이';
-        var raw = d.bot_greeting || '안녕하세요, {name}예요. 성함이 어떻게 되세요?';
-        var greeting = String(raw).replace(/\{name\}/g, botName);
+        var greeting = '';
+        if (sajuInput && sajuInput.name) {
+          greeting = sajuInput.name + '님, 반가워요. ' + botName + '예요. 사주 봤는데... 요즘 뭐가 제일 신경 쓰여요?';
+        } else {
+          var raw = d.bot_greeting || '안녕하세요, {name}예요. 성함이 어떻게 되세요?';
+          greeting = String(raw).replace(/\{name\}/g, botName);
+        }
         setMessages([{ id: '0', role: 'assistant', content: greeting }]);
         setReady(true);
       })
       .catch(function() {
-        setMessages([{ id: '0', role: 'assistant', content: '안녕하세요, 별이예요. 성함이 어떻게 되세요?' }]);
+        if (sajuInput && sajuInput.name) {
+          setMessages([{ id: '0', role: 'assistant', content: sajuInput.name + '님, 반가워요. 별이예요. 사주 봤는데... 요즘 뭐가 제일 신경 쓰여요?' }]);
+        } else {
+          setMessages([{ id: '0', role: 'assistant', content: '안녕하세요, 별이예요. 성함이 어떻게 되세요?' }]);
+        }
         setReady(true);
       });
   }, []);

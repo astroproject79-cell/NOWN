@@ -69,7 +69,7 @@ function PaymentSuccessContent() {
         var reportRes = await fetch('/api/report/generate', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ userId: userId, profileId: profileId, orderId: orderId, isDemo: isDemo }),
+          body: JSON.stringify({ userId: userId, profileId: profileId, orderId: orderId, isDemo: isDemo, name: store.sajuInput?.name || localStorage.getItem('saju_name') || '' }),
         });
         var reportData = await reportRes.json();
 

@@ -1,0 +1,196 @@
+@font-face {
+  font-family: 'ZEN SERIF TTF';
+  src: url('/fonts/ZEN-SERIF-TTF-Regular.woff2') format('woff2'),
+       url('/fonts/ZEN-SERIF-TTF-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Pretendard Variable', 'Pretendard', -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(74,111,255,0.12); border-radius: 2px; }
+
+@keyframes charReveal {
+  0% { opacity: 0; transform: translateY(30px) scale(0.9); filter: blur(6px); }
+  100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+
+@keyframes fadeSlide {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes gentlePulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.05); }
+}
+
+@keyframes drift {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes orbSpin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes scrollBounce {
+  0%, 100% { transform: translateY(0); opacity: 0.3; }
+  50% { transform: translateY(8px); opacity: 0.8; }
+}
+
+@keyframes lineGrow {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+.btn-glow {
+  position: relative;
+  overflow: hidden;
+  border-radius: 999px;
+}
+
+.btn-glow::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 999px;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.12), transparent 40%, rgba(255,255,255,0.06));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.btn-glow::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(100deg, transparent 20%, rgba(255,255,255,0.04) 50%, transparent 80%);
+  transition: left 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.btn-glow:hover::after {
+  left: 120%;
+}
+
+@keyframes orbitPulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.02); }
+}
+
+@keyframes shimmerSlide {
+  0% { transform: translateX(-100%) rotate(15deg); }
+  100% { transform: translateX(200%) rotate(15deg); }
+}
+
+.hide-mobile { display: block; }
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 48px;
+}
+.hero-buttons {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 767px) {
+  .hide-mobile { display: none !important; }
+  .feature-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 48px !important;
+  }
+  .hero-buttons {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 14px !important;
+  }
+  .hero-buttons > button {
+    
+    
+    justify-content: center !important;
+  }
+}
+
+/* Hide horizontal scrollbar but keep functionality */
+[style*="overflow"] {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+[style*="overflow"]::-webkit-scrollbar {
+  display: none;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* PWA safe area */
+body {
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+
+/* Header safe area for PWA */
+.header-safe {
+  padding-top: env(safe-area-inset-top) !important;
+  padding-top: constant(safe-area-inset-top) !important;
+}
+
+/* PWA body safe area */
+.pwa-safe {
+  padding-top: constant(safe-area-inset-top);
+  padding-top: env(safe-area-inset-top);
+}
+
+@supports (padding-top: env(safe-area-inset-top)) {
+  .pwa-safe {
+    padding-top: env(safe-area-inset-top);
+  }
+}
+
+/* PWA standalone mode detection */
+@media all and (display-mode: standalone) {
+  body {
+    padding-top: env(safe-area-inset-top, 44px);
+  }
+}
+
+/* PWA Header safe area - iOS status bar */
+@supports (padding-top: env(safe-area-inset-top)) {
+  @media all and (display-mode: standalone) {
+    .pwa-header {
+      padding-top: env(safe-area-inset-top) !important;
+      height: calc(60px + env(safe-area-inset-top)) !important;
+    }
+  }
+}

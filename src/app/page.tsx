@@ -60,10 +60,20 @@ export default function LandingPage() {
   }, []);
 
   useEffect(() => {
+    var vid = document.querySelector('video') as HTMLVideoElement;
+    if (vid) {
+      vid.play().catch(() => {});
+      document.addEventListener('touchstart', function handler() {
+        vid.play().catch(() => {});
+        document.removeEventListener('touchstart', handler);
+      }, { once: true });
+    }
+  }, []);
+
+  useEffect(() => {
     const timer = setInterval(() => setActiveHook(p => (p + 1) % HOOKS.length), 3000);
     return () => clearInterval(timer);
   }, []);
-
   const handleSubmit = async () => {
     if (!email.trim() || submitting) return;
     setSubmitting(true);
@@ -168,7 +178,7 @@ export default function LandingPage() {
           position: 'absolute', bottom: 0, left: 0, right: 0, height: 'var(--hero-video-h)', zIndex: 2,
           display: 'flex', justifyContent: 'center', alignItems: 'flex-end',
         }}>
-          <video autoPlay muted loop playsInline style={{
+          <video autoPlay muted loop playsInline webkit-playsinline="true" x5-playsinline="true" x5-video-player-type="h5" preload="auto" style={{
             width: 'var(--hero-video-w)', height: 'auto', objectFit: 'cover',
             maskImage: 'linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 30%, rgba(0,0,0,0.3) 60%, transparent 80%)',
             WebkitMaskImage: 'linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 30%, rgba(0,0,0,0.3) 60%, transparent 80%)',

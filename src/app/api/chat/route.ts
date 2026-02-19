@@ -15,28 +15,53 @@ export async function POST(request: NextRequest) {
     var model = await getActiveModel('chat');
     var systemPrompt = await getChatPrompt();
 
-    if (sajuData) {
-      systemPrompt += '\n\n[퀵사주에서 넘어온 데이터]\n' + JSON.stringify(sajuData);
-    }
-
-    var collectedInfo = extractInfoFromHistory(history || [], message);
-
-    if (collectedInfo.ready && !sajuData) {
+    if (sajuData && sajuData.birthDate) {
+      var sajuResult = null;
       try {
-        var calcResult = await calculateSaju(
-          collectedInfo.birthDate,
-          collectedInfo.birthTime || 'unknown',
-          'solar'
+        sajuResult = await calculateSaju(
+          sajuData.birthDate,
+          sajuData.birthTime || 'unknown',
+          sajuData.isLunar ? 'lunar' : 'solar'
         );
-        var dmInfo = DAY_MASTER_INFO[calcResult.dayMaster];
-        systemPrompt += '\n\n[실시간 사주 계산 결과]';
-        systemPrompt += '\n사주: ' + calcResult.yearPillar + ' ' + calcResult.monthPillar + ' ' + calcResult.dayPillar + ' ' + calcResult.hourPillar;
-        systemPrompt += '\n일간: ' + calcResult.dayMaster + ' (' + (dmInfo ? dmInfo.element + ', ' + dmInfo.nature : '') + ')';
+      } catch (e) {}
+
+      systemPrompt += '\n\n## [이미 확보된 사용자 정보 - 절대 다시 묻지 마]';
+      systemPrompt += '\n이름: ' + (sajuData.name || '사용자');
+      systemPrompt += '\n생년월일: ' + sajuData.birthDate;
+      systemPrompt += '\n생시: ' + (sajuData.birthTime || '모름');
+      systemPrompt += '\n성별: ' + (sajuData.gender === 'male' ? '남성' : '여성');
+      systemPrompt += '\n양력/음력: ' + (sajuData.isLunar ? '음력' : '양력');
+
+      if (sajuResult) {
+        var dmInfo = DAY_MASTER_INFO[sajuResult.dayMaster];
+        systemPrompt += '\n\n## [사주 계산 결과]';
+        systemPrompt += '\n사주팔자: ' + sajuResult.yearPillar + ' ' + sajuResult.monthPillar + ' ' + sajuResult.dayPillar + ' ' + sajuResult.hourPillar;
+        systemPrompt += '\n일간: ' + sajuResult.dayMaster + ' (' + (dmInfo ? dmInfo.element + ', ' + dmInfo.nature : '') + ')';
         systemPrompt += '\n성격: ' + (dmInfo ? dmInfo.personality : '');
-        systemPrompt += '\n오행: ' + JSON.stringify(calcResult.elements);
-        systemPrompt += '\n\n이 데이터를 기반으로 구체적인 사주 인사이트를 제공해. 뻔한 말 말고 이 사람 사주에서 실제로 보이는 것만 말해.';
-      } catch (e) {
-        systemPrompt += '\n\n(사주 계산 실패 - 일반적인 인사이트로 대체)';
+        systemPrompt += '\n오행분포: ' + JSON.stringify(sajuResult.elements);
+        systemPrompt += '\n\n★ 중요: 이름, 생년월일, 성별, 생시를 이미 알고 있으니 절대 다시 물어보지 마.';
+        systemPrompt += '\n★ 첫 인사에서 바로 사주 결과를 기반으로 성격을 찔러봐.';
+        systemPrompt += '\n★ "고민이 뭔지"만 자연스럽게 물어봐.';
+      }
+    } else {
+      var collectedInfo = extractInfoFromHistory(history || [], message);
+      if (collectedInfo.ready) {
+        try {
+          var calcResult = await calculateSaju(
+            collectedInfo.birthDate,
+            collectedInfo.birthTime || 'unknown',
+            'solar'
+          );
+          var dmInfo2 = DAY_MASTER_INFO[calcResult.dayMaster];
+          systemPrompt += '\n\n[실시간 사주 계산 결과]';
+          systemPrompt += '\n사주: ' + calcResult.yearPillar + ' ' + calcResult.monthPillar + ' ' + calcResult.dayPillar + ' ' + calcResult.hourPillar;
+          systemPrompt += '\n일간: ' + calcResult.dayMaster + ' (' + (dmInfo2 ? dmInfo2.element + ', ' + dmInfo2.nature : '') + ')';
+          systemPrompt += '\n성격: ' + (dmInfo2 ? dmInfo2.personality : '');
+          systemPrompt += '\n오행: ' + JSON.stringify(calcResult.elements);
+          systemPrompt += '\n\n이 데이터를 기반으로 구체적인 사주 인사이트를 제공해.';
+        } catch (e) {
+          systemPrompt += '\n\n(사주 계산 실패 - 일반적인 인사이트로 대체)';
+        }
       }
     }
 

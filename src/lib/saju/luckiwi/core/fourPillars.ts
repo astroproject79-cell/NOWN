@@ -87,12 +87,21 @@ export function calculateFourPillars(
     calcHour = correction.hour;
     calcMinute = correction.minute;
 
-    // 날짜 변경 처리
+    // 날짜 변경 처리 (태양시 보정에 의한 날짜 이동)
     if (correction.dayOffset !== 0) {
       const date = new Date(year, month - 1, day + correction.dayOffset);
       calcYear = date.getFullYear();
       calcMonth = date.getMonth() + 1;
       calcDay = date.getDate();
+    }
+
+    // 야자시 미적용: 보정 후 23시 이상이면 다음날 자시로 처리
+    if (calcHour >= 23) {
+      const nextDate = new Date(calcYear, calcMonth - 1, calcDay + 1);
+      calcYear = nextDate.getFullYear();
+      calcMonth = nextDate.getMonth() + 1;
+      calcDay = nextDate.getDate();
+      calcHour = 0;
     }
 
     timeCorrectionInfo = {

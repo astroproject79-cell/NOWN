@@ -208,6 +208,7 @@ export function getFullTimeCorrection(
   dayOffset: number;
   correctionApplied: {
     solar: number;   // 태양시 보정 분
+    eqt: number;     // 균시차 보정 분
     dst: number;     // 서머타임 보정 분
     total: number;   // 총 보정 분
   };

@@ -1,19 +1,32 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { supabaseAdmin } from '@/lib/supabase';
 
 export async function POST(request: NextRequest) {
   try {
     var body = await request.json();
-    console.log('=== ABLECITY WEBHOOK ===');
-    console.log(JSON.stringify(body, null, 2));
+    await supabaseAdmin.from('webhook_logs').insert({
+      source: 'ablecity',
+      payload: body,
+      created_at: new Date().toISOString(),
+    });
     return NextResponse.json({ success: true });
   } catch (e: any) {
-    console.log('=== ABLECITY WEBHOOK RAW ===');
     var text = await request.text();
-    console.log(text);
+    await supabaseAdmin.from('webhook_logs').insert({
+      source: 'ablecity',
+      payload: { raw: text, error: e.message },
+      created_at: new Date().toISOString(),
+    });
     return NextResponse.json({ success: true });
   }
 }
 
-export async function GET(request: NextRequest) {
-  return NextResponse.json({ status: 'webhook ready' });
+export async function GET() {
+  var result = await supabaseAdmin
+    .from('webhook_logs')
+    .select('*')
+    .eq('source', 'ablecity')
+    .order('created_at', { ascending: false })
+    .limit(5);
+  return NextResponse.json({ data: result.data });
 }

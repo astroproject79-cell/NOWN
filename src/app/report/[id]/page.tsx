@@ -108,7 +108,7 @@ export default function ReportViewerPage() {
   var [report, setReport] = useState<any>(null);
   var [loading, setLoading] = useState(true);
   var [activeNav, setActiveNav] = useState('overview');
-  var sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  var sectionRefs = useRef<Record<string, HTMLElement | null>>({});
 
   useEffect(function() {
     var id = params.id;

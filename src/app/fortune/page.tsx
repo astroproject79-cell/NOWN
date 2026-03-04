@@ -64,7 +64,7 @@ export default function FortunePage() {
   const next = () => {
     if (step < 4) setStep(step + 1);
     else {
-      setSajuInput({ name, birthDate, birthTime, gender: gender as 'male' | 'female', isLunar, focusArea: focus });
+      setSajuInput({ name, birthDate, birthTime, gender: gender as 'male' | 'female', isLunar, focusArea: focus }); localStorage.setItem('saju_name', name);
       router.push('/fortune/result');
     }
   };

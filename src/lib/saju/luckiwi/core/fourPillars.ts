@@ -85,7 +85,7 @@ export function calculateFourPillars(
     );
 
     calcHour = correction.hour;
-    calcMinute = correction.minute;
+    calcMinute = Math.floor(correction.minute);
 
     // 날짜 변경 처리 (태양시 보정에 의한 날짜 이동)
     if (correction.dayOffset !== 0) {
